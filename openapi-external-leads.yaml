@@ -1,0 +1,57 @@
+openapi: 3.0.0
+info:
+  title: TradeTech Leads API
+  description: API for connecting real-time leads
+  version: '1.0.0'
+servers:
+  - url: https://api.tradetech.ai/
+paths:
+  /webhooks:
+    post:
+      tags:
+        - Real Time Leads
+      summary: Connect real time leads to TRADETech
+      description: This API endpoint is structured to process incoming real time leads to connect them to your AI campaign.
+      parameters:
+        - in: query
+          name: campaign
+          required: true
+          schema:
+            type: string
+          description: Campaign ID
+        - in: header
+          name: x-api-key
+          required: true
+          schema:
+            type: string
+          description: API Key for authorization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - phone
+              properties:
+                phone:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                source:
+                  type: string
+      responses:
+        201:
+          description: Lead created
+        400:
+          description: Bad Request
+        401:
+          description: Unauthenticated
+        500:
+          description: Internal server error
+        503:
+          description: Service unavailable
